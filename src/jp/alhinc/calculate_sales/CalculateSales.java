@@ -1,8 +1,10 @@
 package jp.alhinc.calculate_sales;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,15 +55,13 @@ public class CalculateSales {
 				rcdFiles.add(files[i]);
 			}
 		}
-//		System.out.println(rcdFiles);
 
 
 		for(int i = 0; i < rcdFiles.size(); i++) {
 
 			BufferedReader br = null;
 
-			String branch = "";
-			String sales = "";
+			List<String> fileLine = new ArrayList<>();
 			//支店定義ファイル読み込み(readFileメソッド)を参考に売上ファイルの中身を読み込みます。
 			//売上ファイルの1行目には支店コード、2行目には売上金額が入っています。
 			try {
@@ -69,17 +69,10 @@ public class CalculateSales {
 				br = new BufferedReader(fr);
 
 				String line;
-				int count = 1;
 				// 一行ずつ読み込む
 				while((line = br.readLine()) != null) {
-//					System.out.println(line);
 					//1行目=支店コード、2行目=金額
-					if (count == 1) {
-						branch = line;
-					} else if (count == 2) {
-						sales = line;
-					}
-					count++;
+					fileLine.add(line);
 				}
 			} catch(IOException e) {
 				System.out.println(UNKNOWN_ERROR);
@@ -97,15 +90,14 @@ public class CalculateSales {
 
 			//売上ファイルから読み込んだ売上金額をMapに加算していくために、型の変換を行います。
 			//※詳細は後述で説明
-			long fileSale = Long.parseLong(sales);
+			long fileSale = Long.parseLong(fileLine.get(1));
 			//読み込んだ売上⾦額を加算します。
 			//※詳細は後述で説明
-			Long saleAmount = branchSales.get(branch) + fileSale;
+			Long saleAmount = branchSales.get(fileLine.get(0)) + fileSale;
 
 			//加算した売上⾦額をMapに追加します。
-			branchSales.put(branch, saleAmount);
+			branchSales.put(fileLine.get(0), saleAmount);
 		}
-		System.out.println(branchSales);
 
 
 		// 支店別集計ファイル書き込み処理
@@ -172,7 +164,32 @@ public class CalculateSales {
 	 */
 	private static boolean writeFile(String path, String fileName, Map<String, String> branchNames, Map<String, Long> branchSales) {
 		// ※ここに書き込み処理を作成してください。(処理内容3-1)
-
+		BufferedWriter bw = null;
+		try {
+			File file = new File(path, fileName);
+			FileWriter fr = new FileWriter(file);
+			bw = new BufferedWriter(fr);
+			for (String key : branchNames.keySet()) {
+				//keyという変数には、Mapから取得したキーが代入されています。
+				//拡張for⽂で繰り返されているので、1つ⽬のキーが取得できたら、
+				//2つ⽬の取得...といったように、次々とkeyという変数に上書きされていきます。
+				String test = key + "," + branchNames.get(key) + "," + branchSales.get(key);
+				bw.write(test);
+				bw.newLine();
+			}
+		} catch(IOException e) {
+			System.out.println(UNKNOWN_ERROR);
+		} finally {
+			// ファイルを開いている場合
+			if(bw != null) {
+				try {
+					// ファイルを閉じる
+					bw.close();
+				} catch(IOException e) {
+					System.out.println(UNKNOWN_ERROR);
+				}
+			}
+		}
 		return true;
 	}
 
