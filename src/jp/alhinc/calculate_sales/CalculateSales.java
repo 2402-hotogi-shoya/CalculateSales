@@ -43,7 +43,7 @@ public class CalculateSales {
 		// ※ここから集計処理を作成してください。(処理内容2-1、2-2)
 		//listFilesを使⽤してfilesという配列に、
 		//指定したパスに存在する全てのファイル(または、ディレクトリ)の情報を格納します。
-		File[] files = new File("C:\\Users\\trainee1469\\Desktop\\売上集計システム課題").listFiles();
+		File[] files = new File(args[0]).listFiles();
 
 		//ファイルの情報を格納する List(ArrayList)
 		List<File> rcdFiles = new ArrayList<File>();
@@ -76,6 +76,7 @@ public class CalculateSales {
 				}
 			} catch(IOException e) {
 				System.out.println(UNKNOWN_ERROR);
+				return;
 			} finally {
 				// ファイルを開いている場合
 				if(br != null) {
@@ -179,6 +180,7 @@ public class CalculateSales {
 			}
 		} catch(IOException e) {
 			System.out.println(UNKNOWN_ERROR);
+			return false;
 		} finally {
 			// ファイルを開いている場合
 			if(bw != null) {
