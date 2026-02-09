@@ -173,8 +173,8 @@ public class CalculateSales {
 				//keyという変数には、Mapから取得したキーが代入されています。
 				//拡張for⽂で繰り返されているので、1つ⽬のキーが取得できたら、
 				//2つ⽬の取得...といったように、次々とkeyという変数に上書きされていきます。
-				String test = key + "," + branchNames.get(key) + "," + branchSales.get(key);
-				bw.write(test);
+				String text = key + "," + branchNames.get(key) + "," + branchSales.get(key);
+				bw.write(text);
 				bw.newLine();
 			}
 		} catch(IOException e) {
