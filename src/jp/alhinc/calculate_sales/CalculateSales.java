@@ -85,6 +85,7 @@ public class CalculateSales {
 						br.close();
 					} catch(IOException e) {
 						System.out.println(UNKNOWN_ERROR);
+						return;
 					}
 				}
 			}
@@ -189,6 +190,7 @@ public class CalculateSales {
 					bw.close();
 				} catch(IOException e) {
 					System.out.println(UNKNOWN_ERROR);
+					return false;
 				}
 			}
 		}
