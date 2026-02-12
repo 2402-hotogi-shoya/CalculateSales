@@ -77,7 +77,7 @@ public class CalculateSales {
 		//⽐較回数は売上ファイルの数よりも1回少ないため、
 		//繰り返し回数は売上ファイルのリストの数よりも1つ⼩さい数です。
 		Collections.sort(rcdFiles);
-		for(int i = 0; i < rcdFiles.size() -1; i++) {
+		for(int i = 0; i < rcdFiles.size() - 1; i++) {
 			int former = Integer.parseInt(rcdFiles.get(i).getName().substring(0, 8));
 			int latter = Integer.parseInt(rcdFiles.get(i + 1).getName().substring(0, 8));
 
