@@ -65,11 +65,10 @@ public class CalculateSales {
 		//ファイルの情報を格納する List(ArrayList)
 		List<File> rcdFiles = new ArrayList<File>();
 
-
 		for(int i = 0; i < files.length ; i++) {
 			//ファイル名が取得
 			//matches を使用してファイル名が「数字8桁.rcd」なのか判定。
-			if(files[i].getName() .matches("^[0-9]{8}\\.rcd$")) {
+			if(files[i].isFile() && files[i].getName() .matches("^[0-9]{8}\\.rcd$")) {
 				rcdFiles.add(files[i]);
 			}
 		}
@@ -198,6 +197,7 @@ public class CalculateSales {
 			File file = new File(path, fileName);
 
 
+			//ERROR
 			//支店定義ファイルのあること
 			if(!file.exists()) {
 			    //⽀店定義ファイルが存在しない場合、コンソールにエラーメッセージを表⽰します。
@@ -218,6 +218,7 @@ public class CalculateSales {
 				String[] items = line.split(",");
 
 
+				//ERROR
 				//支店ファイルの数字が3桁
 				//ファイルのカラムが2つであること
 			    if((items.length != 2) || (!items[0].matches("^[0-9]{3}$"))){
