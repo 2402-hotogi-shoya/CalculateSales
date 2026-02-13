@@ -208,6 +208,9 @@ public class CalculateSales {
 	 * @param ファイル名
 	 * @param 支店コードと支店名を保持するMap
 	 * @param 支店コードと売上金額を保持するMap
+	 * @param ファイルがない場合のエラーメッセージ
+	 * @param ファイルフォーマットの正規表現
+	 * @param フォーマットが一致しない場合のエラーメッセージ
 	 * @return 読み込み可否
 	 */
 	private static boolean readFile(String path, String fileName, Map<String, String> branchNames, Map<String, Long> branchSales, String fileError, String regexFormat, String formatError) {
